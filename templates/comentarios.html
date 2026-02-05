@@ -1,11 +1,151 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>COMENTARIO</title>
+    <title>Comentários Gélidos</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    
+    <style>
+        /* 1. FUNDO E GERAL */
+        body {
+            background: linear-gradient(135deg, #e0f7fa 0%, #80deea 50%, #4dd0e1 100%);
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* 2. REMOVENDO A SETA DA NAVBAR (Sua dúvida anterior) */
+        .navbar-link::after {
+            display: none !important;
+            content: none !important;
+        }
+        .navbar-link {
+            padding-right: 1rem !important;
+        }
+
+        /* 3. CONTAINER DE COMENTÁRIOS */
+        .ice-wrapper {
+            width: 100%;
+            max-width: 500px;
+            padding: 20px;
+            margin-top: 50px;
+        }
+
+        /* 4. CAIXA DE INPUT (Efeito Vidro/Gelo) */
+        .box.ice-box {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(15px);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .ice-label {
+            color: #005b6e;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .textarea.ice-input {
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            color: #1a3c44;
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+
+        .textarea.ice-input:focus {
+            background: rgba(255, 255, 255, 0.8);
+            border-color: #00bcd4;
+            box-shadow: 0 0 10px rgba(0, 188, 212, 0.2);
+        }
+
+        .button.is-ice {
+            background: linear-gradient(135deg, #4fc3f7 0%, #29b6f6 100%);
+            color: white;
+            border: none;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+
+        .button.is-ice:hover {
+            transform: translateY(-2px);
+            color: white;
+            box-shadow: 0 5px 15px rgba(41, 182, 246, 0.4);
+        }
+
+        /* 5. LISTA DE COMENTÁRIOS POSTADOS */
+        #feed-comentarios {
+            margin-top: 30px;
+        }
+
+        .comment-card {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            gap: 12px;
+            animation: surgir 0.4s ease-out;
+        }
+
+        .ice-avatar {
+            width: 40px;
+            height: 40px;
+            background: #fff;
+            border-radius: 50%;
+            flex-shrink: 0;
+            border: 2px solid #80deea;
+        }
+
+        @keyframes surgir {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
 <body>
-    PAGINA RESTRITA
+
+    <nav class="navbar is-transparent" style="width: 100%; background: transparent;">
+        <div class="navbar-start">
+            <a class="navbar-link">Comentários</a>
+        </div>
+    </nav>
+
+    <div class="ice-wrapper">
+        <form action="/adicionar_comentario" method="post">
+        <div class="box ice-box">
+            <label class="ice-label">Página de Comentários</label>
+            <div class="field">
+                <div class="control">
+                    <textarea id="input-msg" class="textarea ice-input" placeholder="Escreva algo refrescante..." name="comentario"></textarea>
+                </div>
+            </div>
+            <button type="submit" class="button is-ice is-fullwidth">Enviar Comentário ❄️</button>
+        </div>
+        </form>
+        <div id="feed-comentarios">
+            </div>
+    </div>
+
+    <section class="section">
+        {% for comentarios in lista_de_comentarios %}
+        <div class="box">
+            <span>{{ comentarios }}</span>
+        </div>
+        {% endfor %}
+    </section>
+
+
 </body>
 </html>
